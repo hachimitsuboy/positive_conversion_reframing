@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1079694100601",
+    "project_id": "positive-conversion",
+    "storage_bucket": "positive-conversion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079694100601:android:ad6f309547dfc0c0ccaca8",
+        "android_client_info": {
+          "package_name": "com.example.positive_conversion_reframing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079694100601-kdoq5mmtr2rskea5seh14kj8kk7ni7m5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEowNOLaBCUezIwgQEFbziqxS-yVaNyWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1079694100601-kdoq5mmtr2rskea5seh14kj8kk7ni7m5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
