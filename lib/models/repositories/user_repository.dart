@@ -13,12 +13,13 @@ class UserRepository {
   final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
 
   Future<bool> isSignIn() async {
+    print("isSignInスタート");
     //サインインしている場合は、現在のUserを返す→現在のUserって何？
     final firebaseUser = _auth.currentUser;
     //TODO FirebaseAuth.instanceのcurrentUserには何が入っているのか確認する
     print("firebaseUser: $firebaseUser / isSignIn");
     if (firebaseUser != null) {
-      print("初回ログイン時 / isSignIn");
+      print("firebaseUserがnullでない / ${firebaseUser.uid}");
       currentUser = await databaseManager.getUserInfoDbById(firebaseUser.uid);
       print("currentUser: $currentUser / isSignIn");
       return true;
@@ -83,7 +84,8 @@ class UserRepository {
       displayName: firebaseUser.displayName ?? "",
       inputWord: "",
       selectedWord: "",
-      isMatched: false,
+      positiveDegrees: "",
+      isMatched: "",
     );
   }
 }

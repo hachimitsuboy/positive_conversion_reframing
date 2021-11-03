@@ -25,6 +25,10 @@ class DatabaseManager {
   Future<User> getUserInfoDbById(String userId) async {
     final query =
         await _db.collection("users").where("userId", isEqualTo: userId).get();
+
+    print("query: ${query.docs[0].data()}");
+    final getUser = User.fromMap(query.docs[0].data());
+    print("getUser: $getUser");
     return User.fromMap(query.docs[0].data());
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:positive_conversion_reframing/view/get_value_page.dart';
 
-
 class SelectionCountPreferencePage extends StatefulWidget {
   final String inputWord;
   final List<String> inputWordSynonyms;
@@ -144,7 +143,10 @@ class _SelectionCountPreferencePageState
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => GetValuePage(),
+        builder: (context) => GetValuePage(
+          resultWords: widget.inputWordSynonyms,
+          selectedValue: _selectItem,
+        ),
       ),
     );
   }

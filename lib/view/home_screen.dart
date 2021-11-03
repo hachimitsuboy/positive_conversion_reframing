@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:positive_conversion_reframing/view/create_tile_page.dart';
+import 'package:http/http.dart' as http;
+import 'package:positive_conversion_reframing/view/reframing/reframing_page.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -58,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     primary: Colors.lightGreen,
                     onPrimary: Colors.white,
                   ),
-                  onPressed: () => _toCountNumberPage(context),
+                  onPressed: () => _toConvertHiragana(context),
                   child: Text(
                     "変換",
                     style: TextStyle(fontSize: 20.0),
@@ -72,13 +74,36 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _toCountNumberPage(BuildContext context) {
+  _toConvertHiragana(BuildContext context) async{
+    final data = _textEditingController.text;
+    final urlString = "https://labs.goo.ne.jp/api/hiragana";
+    final uri = Uri.parse(urlString);
+    final headers = {"content-type": "application/json"};
+    final body = {
+      "app_id" : "86150de65e763b32e3c18dd66045195187220aa4d2c5064703b846e8c84e77a8",
+      "sentence" : "$data",
+      "output_type" : "hiragana"
+    };
+
+    final res = await http.post(uri, headers: headers, body: jsonEncode(body));
+    // print(res.body);
+    var resultBody = json.decode(res.body);
+    var resultWord = resultBody["converted"];
+    print("かな変換後: $resultWord");
+    //画面遷移
+    _toCountNumberPage(context, resultWord);
+
+  }
+
+
+
+  _toCountNumberPage(BuildContext context, String resultWord) {
     if (_textEditingController.text != "") {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => CreateTilePage(
-            word: _textEditingController.text,
+          builder: (_) => ReframingPage(
+            word: resultWord,
           ),
         ),
       );
