@@ -26,7 +26,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "positive_conversion_reframing",
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        primarySwatch: Colors.lightGreen,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       home: FutureBuilder(
         future: loginViewModel.isSignIn(),
         builder: (context, AsyncSnapshot<bool> snapshot) {

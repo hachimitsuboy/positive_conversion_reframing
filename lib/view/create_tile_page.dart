@@ -62,7 +62,8 @@ class _CreateTilePageState extends State<CreateTilePage> {
           Icons.search,
           color: Colors.white,
         ),
-        onPressed: () => _getValuePage(context),
+        //TODO
+        onPressed: null,
       ),
     );
   }
@@ -103,15 +104,4 @@ class _CreateTilePageState extends State<CreateTilePage> {
     });
   }
 
-  _getValuePage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SelectionCountPreferencePage(
-          inputWordSynonyms: _result,
-          inputWord: widget.word,
-        ),
-      ),
-    );
-  }
 }
