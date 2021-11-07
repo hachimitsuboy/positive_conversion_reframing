@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:positive_conversion_reframing/view/common/components/iconButton.dart';
+import 'package:positive_conversion_reframing/view/common/components/custom_button.dart';
 import 'package:positive_conversion_reframing/view/home_screen.dart';
 import 'package:positive_conversion_reframing/view_models/login_view_model.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
                         width: double.infinity,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: iconButton(
+                          child: CustomButton(
                             label: 'サインイン',
                             onPressed: () => login(context),
                           ),

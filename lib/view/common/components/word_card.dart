@@ -7,13 +7,15 @@ class WordCard extends StatelessWidget {
     required this.resultList,
   });
 
+
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: resultList.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
