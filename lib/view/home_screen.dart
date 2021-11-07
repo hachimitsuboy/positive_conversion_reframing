@@ -1,7 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:positive_conversion_reframing/view/reframing/reframing_page.dart';
+import 'package:positive_conversion_reframing/view_models/reframing_view_model.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -74,39 +75,35 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _toConvertHiragana(BuildContext context) async{
-    final data = _textEditingController.text;
-    final urlString = "https://labs.goo.ne.jp/api/hiragana";
-    final uri = Uri.parse(urlString);
-    final headers = {"content-type": "application/json"};
-    final body = {
-      "app_id" : "86150de65e763b32e3c18dd66045195187220aa4d2c5064703b846e8c84e77a8",
-      "sentence" : "$data",
-      "output_type" : "hiragana"
-    };
+  _toConvertHiragana(BuildContext context) async {
+    if (_textEditingController.text.length > 0) {
+      final reframingViewModel = context.read<ReframingViewModel>();
+      final enteredHiraganaWord = await reframingViewModel.convertToHiragana(
+          enteredWord: _textEditingController.text);
 
-    final res = await http.post(uri, headers: headers, body: jsonEncode(body));
-    // print(res.body);
-    var resultBody = json.decode(res.body);
-    var resultWord = resultBody["converted"];
-    print("かな変換後: $resultWord");
-    //画面遷移
-    _toCountNumberPage(context, resultWord);
-
+      //言い換え表現の取得 //homeScreenでインディケータを回すように仕様変更
+      await reframingViewModel.getParaphrase(word: enteredHiraganaWord);
+      if (!reframingViewModel.isSuccess) {
+        Fluttertoast.showToast(
+          msg: "他のワードでお試しください",
+        );
+        return;
+      }
+      //画面遷移
+      _toCountNumberPage(context, enteredHiraganaWord);
+    }
+    return;
   }
 
-
-
   _toCountNumberPage(BuildContext context, String resultWord) {
-    if (_textEditingController.text != "") {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => ReframingPage(
-            word: resultWord,
-          ),
+    //画面遷移
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ReframingPage(
+          hireganaWord: resultWord, inputWord: _textEditingController.text,
         ),
-      );
-    }
+      ),
+    );
   }
 }

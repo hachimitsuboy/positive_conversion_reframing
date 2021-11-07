@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
 import 'package:positive_conversion_reframing/view/selection_count_preference_page.dart';
-import 'package:positive_conversion_reframing/view/word_card.dart';
+import 'package:positive_conversion_reframing/view/common/components/word_card.dart';
 
 
 class CreateTilePage extends StatefulWidget {
