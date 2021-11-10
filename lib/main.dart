@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: "positive_conversion_reframing",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.lightGreen,
+        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: FutureBuilder(

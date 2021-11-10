@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.lightGreen,
+                    primary: Colors.blue,
                     onPrimary: Colors.white,
                   ),
                   onPressed: () => _toConvertHiragana(context),
@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
       MaterialPageRoute(
         builder: (_) => ReframingPage(
-          hireganaWord: resultWord, inputWord: _textEditingController.text,
+          hiraganaWord: resultWord, inputWord: _textEditingController.text,
         ),
       ),
     );

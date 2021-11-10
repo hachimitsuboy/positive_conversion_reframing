@@ -1,4 +1,5 @@
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:positive_conversion_reframing/data_class/send_data.dart';
 import 'package:positive_conversion_reframing/data_class/user.dart';
 import 'package:positive_conversion_reframing/models/db/database_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -88,4 +89,11 @@ class UserRepository {
       isMatched: "",
     );
   }
+
+  Future<void> sendData(SendData sendData) async {
+
+    await databaseManager.sendData(sendData);
+
+  }
+
 }

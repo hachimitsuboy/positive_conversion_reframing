@@ -35,13 +35,14 @@ class ReframingViewModel extends ChangeNotifier {
         kanji: rowData[0],
         hiragana: rowData[1],
         paraphraseWordA: rowData[2],
-        paraphraseWordB: rowData[3],
-        paraphraseWordC: rowData[4],
+        paraphraseWordB: (rowData.asMap().containsKey(3)) ? rowData[3] : null,
+        paraphraseWordC: (rowData.asMap().containsKey(4)) ? rowData[4] : null,
       );
       print(
           "matchCsvData: ${matchCsvData.hiragana} / blankDeletingWord: $blankDeletingWord");
       if (matchCsvData.hiragana.contains(blankDeletingWord)) {
         csvData = matchCsvData;
+        print("マッチ確認 / ${csvData!.paraphraseWordC}");
         //TODO break処理（forEachだとbreakが使えないみたい）
       }
     });
@@ -65,6 +66,7 @@ class ReframingViewModel extends ChangeNotifier {
 
   Future<String> convertToHiragana({required String enteredWord}) async {
     final data = enteredWord;
+    print("入力されたワード: $data");
     final urlString = "https://labs.goo.ne.jp/api/hiragana";
     final uri = Uri.parse(urlString);
     final headers = {"content-type": "application/json"};

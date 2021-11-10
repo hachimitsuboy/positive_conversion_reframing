@@ -18,26 +18,29 @@ class LoginScreen extends StatelessWidget {
           builder: (context, model, child) {
             return model.isLoading
                 ? CircularProgressIndicator()
-                : Column(
-                    children: [
-                      SizedBox(
-                        height: 200,
-                      ),
-                      Text("ポジティブ変換アプリにようこそ"),
-                      SizedBox(
-                        height: 150,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: CustomButton(
-                            label: 'サインイン',
-                            onPressed: () => login(context),
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 200,
+                        ),
+                        Text("ポジティブ変換アプリにようこそ"),
+                        SizedBox(
+                          height: 150,
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: CustomButton(
+                              label: 'サインイン',
+                              onPressed: () => login(context),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
           },
         ),

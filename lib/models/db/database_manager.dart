@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:positive_conversion_reframing/data_class/send_data.dart';
 import 'package:positive_conversion_reframing/data_class/user.dart';
 
 class DatabaseManager {
@@ -31,4 +32,13 @@ class DatabaseManager {
     print("getUser: $getUser");
     return User.fromMap(query.docs[0].data());
   }
+
+  Future<void> sendData(SendData sendData) async {
+    await _db.collection("question").doc().set(sendData.toMap());
+
+  }
+
+
+
+
 }

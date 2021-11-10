@@ -1,23 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:positive_conversion_reframing/view/common/components/custom_button.dart';
-import 'package:positive_conversion_reframing/view/common/components/word_card.dart';
 import 'package:positive_conversion_reframing/view/questionnaire/questionnaire_page.dart';
 import 'package:positive_conversion_reframing/view_models/reframing_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ReframingPage extends StatelessWidget {
-  final hireganaWord;
+  final hiraganaWord;
   final inputWord;
 
   ReframingPage({
-    required this.hireganaWord,
+    required this.hiraganaWord,
     required this.inputWord,
   });
 
+  TextEditingController _inputStoryController1 = TextEditingController();
+  TextEditingController _inputStoryController2 = TextEditingController();
+  TextEditingController _inputStoryController3 = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    List<String> paraphraseList = [];
+    List<String?> paraphraseList = [];
     final reframingViewModel = context.read<ReframingViewModel>();
     //awaitする必要がある（csvDataに値が入ってるのに、awaitしてないから elseにいく)
     if (!reframingViewModel.isLoading && reframingViewModel.csvData == null) {
@@ -30,8 +33,9 @@ class ReframingPage extends StatelessWidget {
     if (reframingViewModel.csvData != null) {
       paraphraseList
         ..add(reframingViewModel.csvData!.paraphraseWordA)
-        ..add(reframingViewModel.csvData!.paraphraseWordB ?? "B")
-        ..add(reframingViewModel.csvData!.paraphraseWordC ?? "C");
+        ..add(reframingViewModel.csvData!.paraphraseWordB)
+        ..add(reframingViewModel.csvData!.paraphraseWordC);
+
     } else {
       paraphraseList.add("コーパスに一致するネガティブ語が見つかりませんでした");
     }
@@ -46,52 +50,181 @@ class ReframingPage extends StatelessWidget {
       ),
       body: Consumer<ReframingViewModel>(
         builder: (context, model, child) {
-          return model.isLoading
-              ? Center(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 50,
+          if (model.isLoading) {
+            return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Text(
+                        "「$inputWord」の変換結果",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Text(
+                          "変換されたポジティブワードから、想起される体験談がある場合は入力してください。"
+                          "ない場合は「なし」と入力してください.",
+                          style: TextStyle(fontSize: 14.0),
                         ),
-                        Text(
-                          "「$inputWord」の変換結果",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: 70,
-                        ),
-                        LimitedBox(
-                          maxHeight: 250,
-                          child: WordCard(resultList: paraphraseList),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: CustomButton(
-                              label: "アンケート画面へ,",
-                              onPressed: () => toQuestionnairePage(context),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          elevation: 10,
+                          child: ListTile(
+                            leading: Text(
+                              "1",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            title: Text(
+                              paraphraseList[0]!,
+                              style: TextStyle(fontSize: 20),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TextField(
+                          controller: _inputStoryController1,
+                          decoration: InputDecoration(
+                            hintText: "体験談を入力してください",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      if (paraphraseList[1] == null) Container() else Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0),
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                    ),
+                                    elevation: 10,
+                                    child: ListTile(
+                                      leading: Text(
+                                        "2",
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      title: Text(
+                                        paraphraseList[1]!,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0),
+                                  child: TextField(
+                                    controller: _inputStoryController2,
+                                    decoration: InputDecoration(
+                                      hintText: "体験談を入力してください",
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      if (paraphraseList[2] == null) Container() else Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0),
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18),
+                                    ),
+                                    elevation: 10,
+                                    child: ListTile(
+                                      leading: Text(
+                                        "3",
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      title: Text(
+                                        paraphraseList[2]!,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0),
+                                  child: TextField(
+                                    controller: _inputStoryController3,
+                                    decoration: InputDecoration(
+                                      hintText: "体験談を入力してください",
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: CustomButton(
+                            label: "アンケート画面へ",
+                            onPressed: () => toQuestionnairePage(context),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                )
-              : Center(
+                );
+          } else {
+            return Center(
                   child: CircularProgressIndicator(),
                 );
+          }
         },
       ),
     );
   }
 
   Future<void> getParaphrase(ReframingViewModel reframingViewModel) async {
-    await reframingViewModel.getParaphrase(word: hireganaWord);
+    await reframingViewModel.getParaphrase(word: hiraganaWord);
   }
 
   toQuestionnairePage(BuildContext context) {

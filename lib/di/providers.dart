@@ -1,6 +1,7 @@
 import 'package:positive_conversion_reframing/models/db/database_manager.dart';
 import 'package:positive_conversion_reframing/models/repositories/user_repository.dart';
 import 'package:positive_conversion_reframing/view_models/login_view_model.dart';
+import 'package:positive_conversion_reframing/view_models/questionnaire_view_model.dart';
 import 'package:positive_conversion_reframing/view_models/reframing_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -31,5 +32,10 @@ List<SingleChildWidget> viewModels = [
   ),
   ChangeNotifierProvider<ReframingViewModel>(
     create: (context) => ReframingViewModel(),
+  ),
+  ChangeNotifierProvider<QuestionnaireViewModel>(
+    create: (context) => QuestionnaireViewModel(
+      userRepository: context.read<UserRepository>(),
+    ),
   ),
 ];
